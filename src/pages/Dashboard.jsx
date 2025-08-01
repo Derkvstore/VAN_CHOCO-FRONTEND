@@ -1,4 +1,4 @@
-// frontend/src/components/Dashboard.jsx
+// frontend/src/pages/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -38,20 +38,23 @@ import Factures from './Factures.jsx';
 import Benefices from '../pages/Benefices.jsx';
 import SpecialOrders from '../pages/SpecialOrders.jsx'; // NOUVEL IMPORT : Le composant des commandes spéciales
 
+// Import the logo image
+import logo from '../assets/logo.png'; // Adjust this path if your logo is elsewhere, e.g., '/logo.png' if in 'public'
+
 const sections = [
   { name: 'Produits', icon: CubeIcon },
   { name: 'Vente', icon: PlusCircleIcon },
   { name: 'Sorties', icon: ClockIcon },
   { name: 'Factures', icon: DocumentTextIcon },
   { name: 'Recherche', icon: MagnifyingGlassIcon },
-  { name: 'Bénéfices', icon: CurrencyDollarIcon },
+ // { name: 'Bénéfices', icon: CurrencyDollarIcon },
   { name: 'Dettes', icon: Bars3Icon },
   { name: 'Rapport', icon: ChartBarIcon },
   { name: 'Clients', icon: UserGroupIcon },
   { name: 'Retour mobile', icon: ArrowLeftIcon },
   { name: 'Liste Fournisseurs', icon: TruckIcon },
   { name: 'Rtrs Fournisseur', icon: ArrowsRightLeftIcon },
-  { name: 'Achat', icon: ClipboardDocumentListIcon } // RENOMMÉ ET DÉPLACÉ EN DERNIER
+  //{ name: 'Achat', icon: ClipboardDocumentListIcon } // RENOMMÉ ET DÉPLACÉ EN DERNIER
 ];
 
 export default function Dashboard() {
@@ -92,7 +95,7 @@ export default function Dashboard() {
       case 'Recherche':
         return <Recherche />;
       case 'Factures':
-        return <Factures />;
+       return <Factures />;
       case 'Bénéfices':
         return <Benefices />;
       case 'Achat': // MIS À JOUR : Le cas doit correspondre au nouveau nom
@@ -118,13 +121,15 @@ export default function Dashboard() {
     <div className="flex flex-col min-h-screen bg-blue-50 text-blue-900 font-sans">
       <header className="flex justify-between items-center bg-white shadow-md p-4 sticky top-0 z-10">
         <div className="flex items-center">
-          <h1 className="text-2xl font-semibold text-blue-700 mr-4">Gestion Mobiles</h1>
+          {/* Logo added here */}
+          <img src={logo} alt="NIANGADOU ELECTRO Logo" className="h-10 w-10 mr-2" /> {/* Adjust h- and w- for size */}
+          <h1 className="text-2xl font-semibold text-blue-700 mr-4">ETS DAFF TELECOM</h1>
         </div>
 
         {displayedName && (
           <div className="flex items-center space-x-4">
             <p className="text-lg text-blue-800">
-              Bonjour, <span className="font-bold">{displayedName}</span>!
+              Bienvenue, <span className="font-bold">{displayedName}</span>!
             </p>
             <button
               onClick={handleLogout}

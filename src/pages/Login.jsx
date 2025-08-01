@@ -42,14 +42,14 @@ export default function Login() {
 
         <div className="flex justify-center mb-4">
           <img
-            //src="/logo.png"
-           // alt="Logo Derkv"
+            src="/logo.png"
+            alt="Logo Daff telecom"
             className="w-20 h-20 rounded-full object-cover shadow"
           />
         </div>
 
         <h2 className="text-center text-2xl font-light text-blue-700 mb-6">
-          Connexion 
+          DAFF TELECOM 
         </h2>
 
         {message && (
