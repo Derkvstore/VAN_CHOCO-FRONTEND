@@ -69,6 +69,12 @@ export default function App() { // Renamed to App for direct rendering in Canvas
     setOnConfirmAction(null);
   };
 
+  // ✅ LOGIQUE CORRIGÉE POUR GÉRER LOCAL ET PRODUCTION
+  const backendUrl = import.meta.env.PROD
+    ?    'https://daff-backend-production.up.railway.app'
+
+    : 'http://localhost:3001';
+
   // Fonction pour formater les nombres avec des espaces comme séparateurs de milliers
   const formatNumber = (amount) => {
     if (amount === null || amount === undefined || isNaN(amount)) {
@@ -85,7 +91,7 @@ export default function App() { // Renamed to App for direct rendering in Canvas
     setLoading(true);
     setFormError("");
     setSuccessMessage("");
-    fetch("http://localhost:3001/api/products")
+    fetch(`${backendUrl}/api/products`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Erreur réseau lors de la récupération des produits.");
@@ -106,7 +112,7 @@ export default function App() { // Renamed to App for direct rendering in Canvas
   };
 
   const fetchFournisseurs = () => {
-    fetch("http://localhost:3001/api/fournisseurs")
+    fetch(`${backendUrl}/api/fournisseurs`)
       .then((res) => {
         if (!res.ok) {
           return res.json().then(err => { throw new Error(err.error || "Erreur réseau inconnue lors de la récupération des fournisseurs."); });
@@ -227,7 +233,7 @@ export default function App() { // Renamed to App for direct rendering in Canvas
         return;
       }
       dataToSend.quantite = parsedQuantite;
-      url = `http://localhost:3001/api/products/${editingId}`;
+      url = `${backendUrl}/api/products/${editingId}`;
       method = "PUT";
     } else {
       const imeiInput = form.imei;
@@ -300,7 +306,7 @@ export default function App() { // Renamed to App for direct rendering in Canvas
         fournisseur_id: parseInt(form.fournisseur_id, 10),
       };
       delete dataToSend.quantite;
-      url = "http://localhost:3001/api/products/batch";
+      url = `${backendUrl}/api/products/batch`;
       method = "POST";
     }
 
@@ -349,7 +355,7 @@ export default function App() { // Renamed to App for direct rendering in Canvas
       "Êtes-vous sûr de vouloir supprimer ce produit ? Cette action est irréversible et ne peut être effectuée que si le produit n'est lié à aucune vente.",
       async () => {
         try {
-          const res = await fetch(`http://localhost:3001/api/products/${id}`, {
+          const res = await fetch(`${backendUrl}/api/products/${id}`, {
             method: "DELETE",
           });
           if (res.ok) {

@@ -25,6 +25,12 @@ export default function Rapport() {
   const [statusMessage, setStatusMessage] = useState({ type: '', text: '' });
   const [searchTerm, setSearchTerm] = useState('');
 
+  // ✅ LOGIQUE CORRIGÉE POUR GÉRER LOCAL ET PRODUCTION
+  const backendUrl = import.meta.env.PROD
+    ?    'https://daff-backend-production.up.railway.app'
+
+    : 'http://localhost:3001';
+
   const getFormattedDate = () => {
     const today = new Date();
     const day = String(today.getDate()).padStart(2, '0');
@@ -45,7 +51,7 @@ export default function Rapport() {
     setLoading(true);
     setStatusMessage({ type: '', text: '' });
     try {
-      const response = await axios.get('http://localhost:3001/api/reports/stock-summary');
+      const response = await axios.get(`${backendUrl}/api/reports/stock-summary`); // URL mise à jour
       setStockSummary(response.data);
     } catch (error) {
       console.error('Erreur lors du chargement du résumé du stock:', error);
@@ -57,8 +63,8 @@ export default function Rapport() {
 
   const fetchDailyStats = async () => {
     try {
-      // CORRECTION DE L'URL ICI : Changement de /api/ventes/reports/dashboard-stats à /api/reports/dashboard-stats
-      const response = await axios.get('http://localhost:3001/api/reports/dashboard-stats');
+      // CORRECTION DE L'URL ICI
+      const response = await axios.get(`${backendUrl}/api/reports/dashboard-stats`); // URL mise à jour
       if (response.status !== 200) {
         throw new Error(response.data.error || 'Échec de la récupération des statistiques journalières.');
       }
@@ -321,5 +327,4 @@ export default function Rapport() {
         </div>
       )}
     </div>
-  );
-}
+  )}

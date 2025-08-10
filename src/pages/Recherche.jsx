@@ -1,4 +1,3 @@
-// frontend/src/components/Recherche.jsx
 import React, { useState, useEffect } from 'react';
 import { MagnifyingGlassIcon, XMarkIcon, CheckCircleIcon, XCircleIcon, CubeIcon } from '@heroicons/react/24/outline';
 
@@ -9,6 +8,12 @@ export default function Recherche() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
+
+  // ✅ LOGIQUE CORRIGÉE POUR GÉRER LOCAL ET PRODUCTION
+  const backendUrl = import.meta.env.PROD
+    ?    'https://daff-backend-production.up.railway.app'
+
+    : 'http://localhost:3001';
 
   const handleSearch = async () => {
     if (!searchTerm.trim()) {
@@ -24,7 +29,7 @@ export default function Recherche() {
     setFilteredProducts([]);
 
     try {
-      const response = await fetch('http://localhost:3001/api/products'); 
+      const response = await fetch(`${backendUrl}/api/products`); // URL mise à jour
       if (!response.ok) {
         throw new Error('Échec de la récupération des produits.');
       }

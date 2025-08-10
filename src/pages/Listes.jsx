@@ -14,6 +14,12 @@ export default function Liste() {
   const [statusMessage, setStatusMessage] = useState({ type: '', text: '' }); // { type: 'success' | 'error', text: '' }
   const [searchTerm, setSearchTerm] = useState('');
 
+  // ✅ LOGIQUE CORRIGÉE POUR GÉRER LOCAL ET PRODUCTION
+  const backendUrl = import.meta.env.PROD
+    ?    'https://daff-backend-production.up.railway.app'
+
+    : 'http://localhost:3001';
+
   // Obtenir la date du jour formatée
   const getFormattedDate = () => {
     const today = new Date();
@@ -40,7 +46,7 @@ export default function Liste() {
     setLoading(true);
     setStatusMessage({ type: '', text: '' });
     try {
-      const ventesRes = await fetch('http://localhost:3001/api/ventes');
+      const ventesRes = await fetch(`${backendUrl}/api/ventes`); // URL mise à jour
       if (!ventesRes.ok) {
         const errorData = await ventesRes.json();
         throw new Error(errorData.error || 'Échec de la récupération des ventes.');
