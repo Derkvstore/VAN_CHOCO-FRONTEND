@@ -214,7 +214,7 @@ export default function Rapport() {
                   <th className="px-3 py-2 font-medium">Modèle</th>
                   <th className="px-3 py-2 font-medium">Stockage</th>
                   <th className="px-3 py-2 font-medium">Type</th>
-                  <th className="px-3 py-2 font-medium">Type Carton</th>
+                  <th className="px-3 py-2 font-medium">Type Carton / Type Arrivage</th>
                   <th className="px-3 py-2 font-medium text-right">Qté Totale en Stock</th>
                 </tr>
               </thead>

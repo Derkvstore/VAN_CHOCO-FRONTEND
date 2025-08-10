@@ -567,7 +567,7 @@ export default function Sorties() {
                       </td>
                       <td className="px-3 py-2 text-gray-700">
                         {new Date(data.date_vente).toLocaleDateString('fr-FR', {
-                          year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                          year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'
                         })}
                       </td>
                       <td className="px-3 py-2 text-gray-700">
@@ -610,7 +610,7 @@ export default function Sorties() {
                           {data.statut_vente === 'annule'
                             ? 'ANNULÉ'
                             : data.statut_vente === 'retourne'
-                              ? 'RETOURNÉ'
+                              ? 'REMPLACER'
                               : data.statut_vente === 'remplace'
                                 ? 'REMPLACÉ'
                                 : data.statut_vente === 'rendu'

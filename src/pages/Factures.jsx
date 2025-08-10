@@ -666,11 +666,11 @@ export default function Factures() {
                       statusBgClass = 'bg-green-100 text-green-800';
                       break;
                     case 'paiement_partiel':
-                      displayStatusText = 'En cours (partiel)';
-                      statusBgClass = 'bg-yellow-100 text-yellow-800';
+                      displayStatusText = 'Partielle';
+                      statusBgClass = 'bg-yellow-100 text-yellow-800 ';
                       break;
                     case 'creee':
-                      displayStatusText = 'En cours (créée)';
+                      displayStatusText = 'En cours';
                       statusBgClass = 'bg-blue-100 text-blue-800';
                       break;
                     case 'annulee':
