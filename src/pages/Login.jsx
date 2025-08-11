@@ -39,6 +39,10 @@ export default function Login() {
       }
 
       const data = await res.json();
+
+      // Correction : vider le localStorage avant de stocker le nouveau token
+      localStorage.clear();
+
       localStorage.setItem('token', data.token);
       localStorage.setItem('fullName', data.fullName);
       localStorage.setItem('username', data.username);

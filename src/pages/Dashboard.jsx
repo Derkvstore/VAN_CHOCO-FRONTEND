@@ -91,11 +91,7 @@ export default function Dashboard() {
   }, [navigate, isDarkMode]);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('fullName');
-    localStorage.removeItem('username');
-    localStorage.removeItem('activeSection');
-    localStorage.removeItem('theme');
+    localStorage.clear(); // <-- ici uniquement, vider tout localStorage
     navigate('/');
   };
 
@@ -110,7 +106,6 @@ export default function Dashboard() {
     setIsMenuOpen(false);
   };
 
-  // Ajout d'une gestion d'erreur de rendu pour les sous-composants
   const renderSection = () => {
     try {
       switch (active) {
