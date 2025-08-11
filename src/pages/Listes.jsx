@@ -117,8 +117,8 @@ export default function Liste() {
     })
     .sort((a, b) => a.client_nom.localeCompare(b.client_nom));
     
-    // Calculer la somme totale du reste à payer
-    const totalResteAPayer = filteredAndSortedVentes.reduce((sum, vente) => sum + vente.reste_a_payer_vente, 0);
+  // Calculer la somme totale du reste à payer
+  const totalResteAPayer = filteredAndSortedVentes.reduce((sum, vente) => sum + vente.reste_a_payer_vente, 0);
 
   // Fonction pour gérer l'impression de la liste
   const handlePrint = () => {
@@ -152,14 +152,6 @@ export default function Liste() {
           .no-print, .print-hidden {
             display: none !important;
           }
-          /* Rendre le bloc des totaux visible */
-          .hidden-on-screen-visible-on-print {
-            display: block !important;
-          }
-          /* Masquer l'overlay de développement de Vite ou d'autres outils */
-          #vite-error-overlay, #react-devtools-content {
-            display: none !important;
-          }
           /* Assurer que le tableau est entièrement visible et s'adapte */
           .overflow-x-auto {
             overflow-x: visible !important;
@@ -189,27 +181,20 @@ export default function Liste() {
             color: #333;
           }
         }
-        
-        /* Cacher le bloc des totaux par défaut sur l'écran */
-        .hidden-on-screen-visible-on-print {
-          display: none;
-        }
         `}
       </style>
+
+      {/* Nouvelle section pour le résumé des totaux (visible sur l'écran, masquée à l'impression) */}
+      <div className="flex justify-between items-center text-lg font-bold text-gray-800 border-b-2 border-gray-300 pb-4 mb-4 no-print">
+        <p>Montant Total des Dettes:</p>
+        <p className="text-red-600">{formatCFA(totalResteAPayer)}</p>
+      </div>
 
       {/* Ajout de la classe print-header pour le titre et print-container pour le conteneur principal */}
       <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center flex items-center justify-center print-header">
         <ShoppingCartIcon className="h-6 w-6 text-gray-600 mr-2 print-hidden" />
         LISTE DES DETTES {getFormattedDate()}
       </h2>
-
-      {/* Nouvelle section pour le résumé des totaux (visible uniquement à l'impression) */}
-      <div className="hidden-on-screen-visible-on-print border-b-2 border-gray-300 pb-4 mb-4">
-        <div className="flex justify-between items-center text-lg font-bold text-gray-800">
-            <p>Montant Total des Dettes:</p>
-            <p className="text-red-600">{formatCFA(totalResteAPayer)}</p>
-        </div>
-      </div>
 
       {statusMessage.text && (
         <div className={`mb-4 p-3 rounded-md flex items-center justify-between text-sm no-print
