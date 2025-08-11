@@ -16,7 +16,7 @@ export default function Liste() {
 
   // ✅ LOGIQUE CORRIGÉE POUR GÉRER LOCAL ET PRODUCTION
   const backendUrl = import.meta.env.PROD
-    ?    'https://daff-backend-production.up.railway.app'
+    ?   'https://daff-backend-production.up.railway.app'
 
     : 'http://localhost:3001';
 
@@ -29,16 +29,17 @@ export default function Liste() {
     return `${day}-${month}-${year}`;
   };
 
-  // Fonction pour formater les montants en FCFA
+  // Fonction pour formater les montants en FCA avec des espaces
   const formatCFA = (amount) => {
     if (amount === null || amount === undefined || isNaN(amount)) {
-      return 'N/A CFA';
+      return 'N/A FCA';
     }
+    // Utilise toLocaleString pour formater avec des espaces et ajoute " FCA"
     return parseFloat(amount).toLocaleString('fr-FR', {
-      useGrouping: false,
+      useGrouping: true, // Ceci ajoute l'espace comme séparateur de milliers
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
-    }) + ' CFA';
+    }) + ' FCA';
   };
 
   // Fonction pour récupérer les données des ventes depuis le backend
