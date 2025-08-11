@@ -65,6 +65,8 @@ export default function Liste() {
   // Charger les ventes au montage du composant
   useEffect(() => {
     fetchVentes();
+    // Met à jour le titre de la page pour le nom de fichier
+    document.title = `LISTE DES DETTES ${getFormattedDate()}`;
   }, []);
 
   // Préparer les données pour l'affichage (regroupement par vente)
