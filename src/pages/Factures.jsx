@@ -905,7 +905,7 @@ step="1" // MODIFIÉ: step="1" pour les entiers
 min="0"
 />
 </td>
-<td className="px-3 py-2 text-right">{formatAmount(row.totalPrice)}</td>
+<td className="px-3 py-2 text-right">{formatCFA(row.totalPrice)}</td>
 <td className="px-3 py-2 text-center">
 <button
 type="button"
