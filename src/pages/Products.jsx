@@ -594,8 +594,8 @@ export default function App() {
                 <option value="GW">GW</option>
                 <option value="ACTIVE">ACTIVE</option>
                 <option value="NO ACTIVE">NO ACTIVE</option>
-                <option value="NO ACTIVE">ESIM NO ACTIVE</option>
-                 <option value="NO ACTIVE">ESIM ACTIVE</option>
+                <option value="ESIM NO ACTIVE">ESIM NO ACTIVE</option>
+                 <option value="ESIM ACTIVE">ESIM ACTIVE</option>
               </select>
             </div>
           )}
