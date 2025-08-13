@@ -29,6 +29,7 @@ const MODELES = {
   Samsung: ["Galaxy S21", "Galaxy S22", "Galaxy A14", "Galaxy Note 20"],
   iPad: ["Air 10éme Gen", "Air 11éme Gen", "Pro", "Mini"],
   AirPod: ["1ère Gen", "2ème Gen", "3ème Gen", "4ème Gen", "Pro 1ème Gen,", "2ème Gen",],
+  Google: ["PIXEL 8 PRO"],
 };
 const STOCKAGES = ["64 Go", "128 Go", "256 Go", "512 Go", "1 To" ,"2 To"];
 
