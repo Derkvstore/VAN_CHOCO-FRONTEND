@@ -14,7 +14,7 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 // Listes pour autocomplétion
-const MARQUES = ["iPhone", "Samsung", "iPad", "AirPod"];
+const MARQUES = ["iPhone", "Samsung", "iPad", "AirPod", "Google" ];
 const MODELES = {
   iPhone: [
     "SE 2022","X", "XR", "XS", "XS MAX", "11 SIMPLE", "11 PRO", "11 PRO MAX",
@@ -28,7 +28,7 @@ const MODELES = {
   ],
   Samsung: ["Galaxy S21", "Galaxy S22", "Galaxy A14", "Galaxy Note 20"],
   iPad: ["Air 10éme Gen", "Air 11éme Gen", "Pro", "Mini"],
-  AirPod: ["1ère Gen", "2ème Gen", "3ème Gen", "4ème Gen", "Pro 1ème Gen,", "2ème Gen",],
+  AirPod: ["1ère Gen", "2ème Gen", "3ème Gen", "4ème Gen", "Pro 1ème Gen,", "2ème Gen"],
   Google: ["PIXEL 8 PRO"],
 };
 const STOCKAGES = ["64 Go", "128 Go", "256 Go", "512 Go", "1 To" ,"2 To"];
