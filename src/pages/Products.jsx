@@ -30,7 +30,7 @@ const MODELES = {
   iPad: ["Air 10éme Gen", "Air 11éme Gen", "Pro", "Mini"],
   AirPod: ["1ère Gen", "2ème Gen", "3ème Gen", "4ème Gen", "Pro 1ème Gen,", "2ème Gen"],
   Google: ["PIXEL 8 PRO"],
-  APPLE:["WATCH 09", "WATCH 10","WATCH 11", ]
+  APPLE:["WATCH 09 41mm", "WATCH 10 41mm","WATCH 10 46mm","WATCH 11 41mm","WATCH 10 46mm" ]
 };
 const STOCKAGES = ["64 Go", "128 Go", "256 Go", "512 Go", "1 To" ,"2 To"];
 
