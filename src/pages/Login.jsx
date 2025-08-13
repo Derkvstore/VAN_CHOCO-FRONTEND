@@ -31,7 +31,7 @@ export default function Login() {
           setMessage('❌ Erreur: L\'API de connexion est introuvable.');
         } else if (res.status === 401) {
           const errorData = await res.json();
-          setMessage(`❌ ${errorData.message}`);
+          setMessage(`❌ ${errorData.error}`);
         } else {
           setMessage(`❌ Erreur ${res.status}: ${res.statusText}`);
         }
