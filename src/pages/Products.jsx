@@ -22,7 +22,7 @@ const MODELES = {
     "13 SIMPLE", "13 MINI", "13 PRO", "13 PRO MAX",
     "14 SIMPLE", "14 PLUS", "14 PRO", "14 PRO MAX",
     "15 SIMPLE", "15 PLUS", "15 PRO", "15 PRO MAX",
-    "16 SIMPLE", "16 PLUS", "16 PRO", "16 PRO MAX",
+    "16 SIMPLE", "16e","16 PLUS", "16 PRO", "16 PRO MAX",
      "17 SIMPLE", "17 AIR", "17 PRO", "17 PRO MAX",
     
   ],
