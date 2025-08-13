@@ -292,7 +292,11 @@ export default function Liste() {
                         return `${day}-${month}-${year}`;
                       })()}
                     </td>
-                    <td className="px-3 py-2 text-gray-700">{vente.client_telephone}</td>
+                    <td className="px-3 py-2 text-gray-700">
+                      {vente.client_telephone
+                        ? `+223 ${vente.client_telephone.replace(/(\d{2})/g, '$1 ')}`.trim()
+                        : 'N/A'}
+                    </td>
                   </tr>
                 ))}
               </tbody>
