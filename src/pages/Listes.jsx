@@ -258,7 +258,7 @@ export default function Liste() {
               <tbody className="divide-y divide-gray-100">
                 {filteredAndSortedVentes.map((vente) => (
                   <tr key={vente.vente_id} className="hover:bg-gray-50">
-                    <td className="px-3 py-2 text-gray-900 font-medium">{vente.client_nom}</td>
+                    <td className="px-3 py-2 text-gray-900 font-medium">{vente.client_nom.toUpperCase()}</td>
                     <td className="px-3 py-2 text-gray-700">
                       {/* Affichage des articles sur une seule ligne */}
                       {vente.articles.map((item, itemIndex) => (
