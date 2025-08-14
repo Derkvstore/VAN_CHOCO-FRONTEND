@@ -59,16 +59,6 @@ export default function RapportJournalier() {
     window.print();
   };
 
-  const renderStockChange = (hier, aujourdhui) => {
-    const change = aujourdhui - hier;
-    if (change > 0) {
-      return <span className="text-green-600 font-semibold">+{change}</span>;
-    } else if (change < 0) {
-      return <span className="text-red-600 font-semibold">{change}</span>;
-    }
-    return <span className="text-gray-500">0</span>;
-  };
-
   // Fonction pour afficher le statut du stock avec des couleurs
   const renderStockStatus = (stock) => {
     if (stock <= 0) {
@@ -136,7 +126,6 @@ export default function RapportJournalier() {
                 <th className="py-3 px-4 font-semibold text-center">Stock Hier</th>
                 <th className="py-3 px-4 font-semibold text-center">Mouvements du Jour</th>
                 <th className="py-3 px-4 font-semibold text-center">Stock Aujourd'hui</th>
-                <th className="py-3 px-4 font-semibold text-center">Variation</th>
                 <th className="py-3 px-4 font-semibold text-center">Statut</th>
               </tr>
             </thead>
@@ -159,12 +148,11 @@ export default function RapportJournalier() {
                     </div>
                   </td>
                   <td className="py-3 px-4 whitespace-nowrap text-center text-lg font-bold text-blue-700">{item.stock_aujourdhui}</td>
-                  <td className="py-3 px-4 whitespace-nowrap text-center text-lg">{renderStockChange(item.stock_hier, item.stock_aujourdhui)}</td>
                   <td className="py-3 px-4 whitespace-nowrap text-center">{renderStockStatus(item.stock_aujourdhui)}</td>
                 </tr>
               )) : (
                 <tr>
-                  <td colSpan="6" className="text-center py-10 text-gray-500">Aucun produit trouvé ou aucun mouvement de stock aujourd'hui.</td>
+                  <td colSpan="5" className="text-center py-10 text-gray-500">Aucun produit trouvé ou aucun mouvement de stock aujourd'hui.</td>
                 </tr>
               )}
             </tbody>
