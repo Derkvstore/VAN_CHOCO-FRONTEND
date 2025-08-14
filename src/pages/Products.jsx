@@ -843,7 +843,7 @@ export default function App() {
                     {formatNumber(p.prix_vente)}
                   </td>
                   <td className="px-4 sm:px-6 py-4 text-gray-700 whitespace-nowrap">
-                    {fournisseurs.find(f => f.id === parseInt(p.fournisseur_id, 10))?.nom || p.nom_fournisseur || "Non défini"}
+                    {fournisseurs.find(f => f.id === parseInt(p.fournisseur_id, 10))?.nom || p.nom_fournisseur.toUpperCase() || "Non défini"}
                   </td>
                   <td className="px-4 sm:px-6 py-4 text-gray-700 whitespace-nowrap">
                     {p.date_ajout
