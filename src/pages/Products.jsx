@@ -678,7 +678,7 @@ export default function App() {
               <option value="">Sélectionner un fournisseur</option>
               {fournisseurs.map((f) => (
                 <option key={f.id} value={f.id}>
-                  {f.nom}
+                  {f.nom.toUpperCase()}
                 </option>
               ))}
             </select>
