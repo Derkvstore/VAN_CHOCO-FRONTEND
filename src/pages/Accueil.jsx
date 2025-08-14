@@ -30,18 +30,9 @@ export default function Accueil() {
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
 
   const quotes = [
-    "DAFF TELECOM 🌟, l'univers des mobiles authentiques. L'innovation à portée de main.",
-    "Votre satisfaction, notre priorité. Découvrez la qualité DAFF TELECOM 📱.",
-    "DAFF TELECOM 🪐 : Des mobiles fiables, un service irréproquable. Connectez-vous à l'excellence.",
-    "L'authenticité au meilleur prix. C'est la promesse DAFF TELECOM ✨.",
-    "DAFF TELECOM 💡 : La technologie mobile réinventée pour vous. Simplicité et performance.",
-    "DAFF TELECOM 🌟 : L'excellence mobile à votre service. Des produits qui durent.",
-    "Chez DAFF TELECOM 🛡️, la sécurité de vos données et la qualité de votre appareil sont garanties.",
-    "DAFF TELECOM 💎 : Chaque mobile est une promesse de performance et de durabilité.",
-    "Libérez le potentiel de votre communication avec DAFF TELECOM 📶. Toujours connecté, toujours au top.",
-    "DAFF TELECOM 🤝 : Votre partenaire de confiance pour tous vos besoins en téléphonie mobile.",
-    "Découvrez la différence DAFF TELECOM 🔋 : Des batteries qui tiennent, des performances qui durent.",
-    "DAFF TELECOM 🌐 : Le monde de la mobile authentique, à portée de clic."
+    "VAN CHOCO 🌟, l'univers des mobiles authentiques. L'innovation à portée de main.",
+    
+    "VAN CHOCO 🌐 : Le monde de la mobile authentique, à portée de clic."
   ];
 
   const navigate = useNavigate();
@@ -57,7 +48,7 @@ export default function Accueil() {
     setIsNetworkError(false);
     try {
       const backendUrl = import.meta.env.PROD
-        ? 'https://daff-backend-production.up.railway.app'
+        ? 'https://vanchoco-backend-production.up.railway.app'
 
         : 'http://localhost:3001';
 

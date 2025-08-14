@@ -76,7 +76,7 @@ export default function App() {
   };
 
   const backendUrl = import.meta.env.PROD
-    ? 'https://daff-backend-production.up.railway.app'
+    ? 'https://vanchoco-backend-production.up.railway.app'
     : 'http://localhost:3001';
 
   const formatNumber = (amount) => {

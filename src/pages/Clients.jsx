@@ -17,7 +17,7 @@ const QUARTIERS_BAMAKO = [
   "ACI 2000", "Badalabougou", "Bolibana", "Boulkassoumbougou", "Djelibougou",
   "Djicoroni Para", "Faladiè", "Hippodrome", "Magnambougou", "Missira",
   "Niamakoro", "Quinzambougou", "Sebénikoro", "Sogoniko", "Toumambougou",
-  "Yirimadio", "Kalabancoura", "Sikasso", "Koulikoro", "Ségou", "Halle de Bamako"
+  "Yirimadio", "Kalabancoura", "Sikasso", "Koulikoro", "Ségou", "Halle de Bamako", "Malitel DA", "Suguba"
 ];
 
 export default function Clients() {
@@ -35,7 +35,7 @@ export default function Clients() {
   const [onConfirmAction, setOnConfirmAction] = useState(null);
   
   const backendUrl = import.meta.env.PROD
-    ? 'https://daff-backend-production.up.railway.app'
+    ? 'https://vanchoco-backend-production.up.railway.app'
     : 'http://localhost:3001';
 
   const formatPhoneNumber = (num) => {
