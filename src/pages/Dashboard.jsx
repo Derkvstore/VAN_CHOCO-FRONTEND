@@ -39,7 +39,7 @@ import Factures from './Factures.jsx';
 import Benefices from '../pages/Benefices.jsx';
 import SpecialOrders from '../pages/SpecialOrders.jsx';
 import RapportJournalier from './RapportJournalier.jsx';
-import Dettes from './Dettes.jsx'; // <-- 1. IMPORT DU NOUVEAU COMPOSANT
+//import Dettes from './Dettes.jsx'; // <-- 1. IMPORT DU NOUVEAU COMPOSANT
 import logo from '../assets/logo.png';
 
 const sections = [
@@ -49,7 +49,7 @@ const sections = [
   { name: 'Factures', icon: DocumentTextIcon },
   { name: 'Recherche', icon: MagnifyingGlassIcon },
   { name: 'Bénéfices', icon: CurrencyDollarIcon },
-  { name: 'Dettes', icon: UserGroupIcon }, // <-- 2. SECTION "DETTES" AJOUTÉE AU MENU
+  //{ name: 'Dettes', icon: UserGroupIcon }, // <-- 2. SECTION "DETTES" AJOUTÉE AU MENU
   { name: 'Rapport', icon: ChartBarIcon },
   { name: 'Rapport Journalier', icon: CalendarDaysIcon },
   { name: 'Clients', icon: UserGroupIcon },
@@ -133,8 +133,8 @@ export default function Dashboard() {
           return <Fournisseurs />;
         case 'Rtrs Fournisseur':
           return <RemplacementsFournisseur />;
-        case 'Dettes': // <-- 3. CAS AJOUTÉ POUR AFFICHER LE COMPOSANT
-          return <Dettes />;
+        // case 'Dettes': // <-- 3. CAS AJOUTÉ POUR AFFICHER LE COMPOSANT
+        //   return <Dettes />;
         case 'Rapport':
           return <Rapport />;
         case 'Rapport Journalier':
