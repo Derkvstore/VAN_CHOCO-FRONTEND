@@ -410,7 +410,7 @@ export default function App() {
   });
 
   return (
-    <div className="p-4 sm:p-8 max-w-full mx-auto font-sans">
+    <>
        <style>
         {`
         /* Styles pour l'animation de chargement du bouton (style Apple) */
@@ -897,6 +897,6 @@ export default function App() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
