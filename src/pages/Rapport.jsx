@@ -255,7 +255,7 @@ export default function Rapport() {
               <ul className="space-y-2 text-gray-700 text-sm">
                 <li className="flex items-center">
                   <ClockIcon className="h-4 w-4 mr-2 text-gray-500" />
-                  Stock d'hier: <span className="font-semibold ml-1">___</span>
+                  Stock d'hier: <span className="font-semibold ml-1">{dailyStats.yesterdayStockCarton}</span>
                 </li>
                 <li className="flex items-center">
                   <PlusIcon className="h-4 w-4 mr-2 text-green-600" />
@@ -294,7 +294,7 @@ export default function Rapport() {
               <ul className="space-y-2 text-gray-700 text-sm">
                 <li className="flex items-center">
                   <ClockIcon className="h-4 w-4 mr-2 text-gray-500" />
-                  Stock d'hier: <span className="font-semibold ml-1">___</span>
+                  Stock d'hier: <span className="font-semibold ml-1">{dailyStats.yesterdayStockArrivage}</span>
                 </li>
                 <li className="flex items-center">
                   <PlusIcon className="h-4 w-4 mr-2 text-green-600" />
