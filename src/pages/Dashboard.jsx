@@ -1,4 +1,3 @@
-// frontend/src/pages/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -21,7 +20,8 @@ import {
   ClipboardDocumentListIcon,
   MoonIcon,
   SunIcon,
-  XMarkIcon
+  XMarkIcon,
+  CalendarDaysIcon // Ajout de l'icône pour le nouveau rapport
 } from '@heroicons/react/24/outline';
 
 // Importez vos composants de section ici avec les chemins corrects
@@ -39,6 +39,7 @@ import Fournisseurs from './Fournisseurs.jsx';
 import Factures from './Factures.jsx';
 import Benefices from '../pages/Benefices.jsx';
 import SpecialOrders from '../pages/SpecialOrders.jsx';
+import RapportJournalier from './RapportJournalier.jsx'; // Import du nouveau composant
 import logo from '../assets/logo.png';
 
 const sections = [
@@ -50,6 +51,7 @@ const sections = [
   { name: 'Bénéfices', icon: CurrencyDollarIcon },
   { name: 'Dettes', icon: Bars3Icon },
   { name: 'Rapport', icon: ChartBarIcon },
+  { name: 'Rapport Journalier', icon: CalendarDaysIcon }, // Ajout de la nouvelle section
   { name: 'Clients', icon: UserGroupIcon },
   { name: 'Retour mobile', icon: ArrowLeftIcon },
   { name: 'Liste Fournisseurs', icon: TruckIcon },
@@ -91,7 +93,7 @@ export default function Dashboard() {
   }, [navigate, isDarkMode]);
 
   const handleLogout = () => {
-    localStorage.clear(); // <-- ici uniquement, vider tout localStorage
+    localStorage.clear();
     navigate('/');
   };
 
@@ -135,6 +137,8 @@ export default function Dashboard() {
           return <Liste />;
         case 'Rapport':
           return <Rapport />;
+        case 'Rapport Journalier': // Ajout du cas pour le nouveau rapport
+          return <RapportJournalier />;
         case 'Accueil':
           return <Accueil />;
         default:
