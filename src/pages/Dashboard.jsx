@@ -21,7 +21,7 @@ import {
   MoonIcon,
   SunIcon,
   XMarkIcon,
-  CalendarDaysIcon // Ajout de l'icône pour le nouveau rapport
+  CalendarDaysIcon
 } from '@heroicons/react/24/outline';
 
 // Importez vos composants de section ici avec les chemins corrects
@@ -29,7 +29,6 @@ import Clients from './Clients.jsx';
 import Products from './Products.jsx';
 import NouvelleVente from './NouvelleVentes.jsx';
 import Sorties from './Sorties.jsx';
-import Liste from './Listes.jsx';
 import Rapport from './Rapport.jsx';
 import Accueil from './Accueil.jsx';
 import RetoursMobiles from './RetoursMobiles.jsx';
@@ -39,7 +38,8 @@ import Fournisseurs from './Fournisseurs.jsx';
 import Factures from './Factures.jsx';
 import Benefices from '../pages/Benefices.jsx';
 import SpecialOrders from '../pages/SpecialOrders.jsx';
-import RapportJournalier from './RapportJournalier.jsx'; // Import du nouveau composant
+import RapportJournalier from './RapportJournalier.jsx';
+import Dettes from './Dettes.jsx'; // <-- 1. IMPORT DU NOUVEAU COMPOSANT
 import logo from '../assets/logo.png';
 
 const sections = [
@@ -49,9 +49,9 @@ const sections = [
   { name: 'Factures', icon: DocumentTextIcon },
   { name: 'Recherche', icon: MagnifyingGlassIcon },
   { name: 'Bénéfices', icon: CurrencyDollarIcon },
-  { name: 'Dettes', icon: Bars3Icon },
+  { name: 'Dettes', icon: UserGroupIcon }, // <-- 2. SECTION "DETTES" AJOUTÉE AU MENU
   { name: 'Rapport', icon: ChartBarIcon },
-  { name: 'Rapport Journalier', icon: CalendarDaysIcon }, // Ajout de la nouvelle section
+  { name: 'Rapport Journalier', icon: CalendarDaysIcon },
   { name: 'Clients', icon: UserGroupIcon },
   { name: 'Retour mobile', icon: ArrowLeftIcon },
   { name: 'Liste Fournisseurs', icon: TruckIcon },
@@ -133,11 +133,11 @@ export default function Dashboard() {
           return <Fournisseurs />;
         case 'Rtrs Fournisseur':
           return <RemplacementsFournisseur />;
-        case 'Dettes':
-          return <Liste />;
+        case 'Dettes': // <-- 3. CAS AJOUTÉ POUR AFFICHER LE COMPOSANT
+          return <Dettes />;
         case 'Rapport':
           return <Rapport />;
-        case 'Rapport Journalier': // Ajout du cas pour le nouveau rapport
+        case 'Rapport Journalier':
           return <RapportJournalier />;
         case 'Accueil':
           return <Accueil />;
