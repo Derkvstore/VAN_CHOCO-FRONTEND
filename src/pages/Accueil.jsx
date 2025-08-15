@@ -29,11 +29,11 @@ export default function Accueil() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
 
-  // const quotes = [
-  //   "VAN CHOCO 🌟, l'univers des mobiles authentiques. L'innovation à portée de main.",
+  const quotes = [
+    "VAN CHOCO 🌟, l'univers des mobiles authentiques. L'innovation à portée de main.",
     
-  //   "VAN CHOCO 🌐 : Le monde de la mobile authentique, à portée de clic."
-  // ];
+    "VAN CHOCO 🌐 : Le monde de la mobile authentique, à portée de clic."
+  ];
 
   const navigate = useNavigate();
 
