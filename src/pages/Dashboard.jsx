@@ -123,8 +123,8 @@ export default function Dashboard() {
           return <Sorties />;
         case 'Recherche':
           return <Recherche />;
-        case 'Factures':
-          return <Factures />;
+        // case 'Factures':
+        //   return <Factures />;
         case 'Factures Clients':
           return <FacturesConsolidees />; // <-- 3. CAS AJOUTÉ POUR AFFICHER LE COMPOSANT
         case 'Bénéfices':
