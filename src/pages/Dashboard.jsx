@@ -51,14 +51,14 @@ const sections = [
   // { name: 'Factures EN GROS', icon: DocumentTextIcon },
  { name: 'Factures', icon: ListBulletIcon }, // <-- 2. SECTION "FACTURES CLIENTS" AJOUTÉE AU MENU
   { name: 'Recherche', icon: MagnifyingGlassIcon },
-  // { name: 'Bénéfices', icon: CurrencyDollarIcon },
+  { name: 'Bénéfices', icon: CurrencyDollarIcon },
   { name: 'Dettes', icon: Bars3Icon },
   { name: 'Rapport', icon: ChartBarIcon },
-  { name: 'Rapport Journalier', icon: CalendarDaysIcon },
+  { name: 'Mouvement', icon: CalendarDaysIcon },
   { name: 'Clients', icon: UserGroupIcon },
-  { name: 'Retour mobile', icon: ArrowLeftIcon },
-  { name: 'Liste Fournisseurs', icon: TruckIcon },
-  { name: 'Rtrs Fournisseur', icon: ArrowsRightLeftIcon },
+  { name: 'Retour', icon: ArrowLeftIcon },
+  { name: 'Fournisseurs', icon: TruckIcon },
+  { name: 'Rtrs Frns', icon: ArrowsRightLeftIcon },
   { name: 'Achat', icon: ClipboardDocumentListIcon }
 ];
 
@@ -128,21 +128,21 @@ export default function Dashboard() {
         //   return <Factures />;
            case 'Factures':
           return <FacturesConsolidees />; // <-- 3. CAS AJOUTÉ POUR AFFICHER LE COMPOSANT
-        // case 'Bénéfices':
-        //   return <Benefices />;
+        case 'Bénéfices':
+           return <Benefices />;
         case 'Achat':
           return <SpecialOrders />;
-        case 'Retour mobile':
+        case 'Retour':
           return <RetoursMobiles />;
-        case 'Liste Fournisseurs':
+        case 'Fournisseurs':
           return <Fournisseurs />;
-        case 'Rtrs Fournisseur':
+        case 'Rtrs Frns':
           return <RemplacementsFournisseur />;
         case 'Dettes':
           return <Liste />;
         case 'Rapport':
           return <Rapport />;
-          case 'Rapport Journalier':
+          case 'Mouvement':
           return <RapportJournalier />;
         case 'Accueil':
           return <Accueil />;
@@ -190,7 +190,7 @@ export default function Dashboard() {
                 }`}
             >
               <HomeIcon className="h-6 w-6 mr-3" />
-              Acceuil
+              Accueil
             </button>
           </li>
           {sections.map(({ name, icon: Icon }) => (
