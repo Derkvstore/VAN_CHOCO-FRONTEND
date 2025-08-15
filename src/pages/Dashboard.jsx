@@ -48,7 +48,7 @@ const sections = [
   { name: 'Produits', icon: CubeIcon },
   { name: 'Vente', icon: PlusCircleIcon },
   { name: 'Sorties', icon: ClockIcon },
-  // { name: 'Factures EN GROS', icon: DocumentTextIcon },
+ { name: 'Factures EN GROS', icon: DocumentTextIcon },
  { name: 'Factures', icon: ListBulletIcon }, // <-- 2. SECTION "FACTURES CLIENTS" AJOUTÉE AU MENU
   { name: 'Recherche', icon: MagnifyingGlassIcon },
   { name: 'Bénéfices', icon: CurrencyDollarIcon },
@@ -124,8 +124,8 @@ export default function Dashboard() {
           return <Sorties />;
         case 'Recherche':
           return <Recherche />;
-        // case 'Factures EN GROS':
-        //   return <Factures />;
+         case 'Factures EN GROS':
+           return <Factures />;
            case 'Factures':
           return <FacturesConsolidees />; // <-- 3. CAS AJOUTÉ POUR AFFICHER LE COMPOSANT
         case 'Bénéfices':
