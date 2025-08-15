@@ -1,7 +1,8 @@
+// frontend/src/pages/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  HomeIcon,
+ HomeIcon,
   ShoppingCartIcon,
   CubeIcon,
   UserGroupIcon,
@@ -29,17 +30,17 @@ import Clients from './Clients.jsx';
 import Products from './Products.jsx';
 import NouvelleVente from './NouvelleVentes.jsx';
 import Sorties from './Sorties.jsx';
+import Liste from './Listes.jsx';
 import Rapport from './Rapport.jsx';
 import Accueil from './Accueil.jsx';
 import RetoursMobiles from './RetoursMobiles.jsx';
 import RemplacementsFournisseur from './RemplacementsFournisseur.jsx';
 import Recherche from './Recherche.jsx';
-import Liste from './Listes.jsx';
 import Fournisseurs from './Fournisseurs.jsx';
 import Factures from './Factures.jsx';
 import Benefices from '../pages/Benefices.jsx';
-import SpecialOrders from '../pages/SpecialOrders.jsx';
 import RapportJournalier from './RapportJournalier.jsx';
+import SpecialOrders from '../pages/SpecialOrders.jsx';
 import FacturesConsolidees from './FacturesConsolidees.jsx'; // <-- 1. IMPORT DU NOUVEAU COMPOSANT
 import logo from '../assets/logo.png';
 
@@ -47,17 +48,17 @@ const sections = [
   { name: 'Produits', icon: CubeIcon },
   { name: 'Vente', icon: PlusCircleIcon },
   { name: 'Sorties', icon: ClockIcon },
-  //{ name: 'Factures', icon: DocumentTextIcon },
-  { name: 'Factures', icon: ListBulletIcon }, // <-- 2. SECTION "FACTURES CLIENTS" AJOUTÉE AU MENU
+  { name: 'Factures EN GROS', icon: DocumentTextIcon },
+ { name: 'Factures', icon: ListBulletIcon }, // <-- 2. SECTION "FACTURES CLIENTS" AJOUTÉE AU MENU
   { name: 'Recherche', icon: MagnifyingGlassIcon },
-  //{ name: 'Bénéfices', icon: CurrencyDollarIcon },
+  { name: 'Bénéfices', icon: CurrencyDollarIcon },
   { name: 'Dettes', icon: Bars3Icon },
   { name: 'Rapport', icon: ChartBarIcon },
-  { name: 'Mouvement', icon: CalendarDaysIcon },
+  { name: 'Rapport Journalier', icon: CalendarDaysIcon },
   { name: 'Clients', icon: UserGroupIcon },
-  { name: 'Retours', icon: ArrowLeftIcon },
-  { name: 'Fournisseurs', icon: TruckIcon },
-  { name: 'Retours DxB', icon: ArrowsRightLeftIcon },
+  { name: 'Retour mobile', icon: ArrowLeftIcon },
+  { name: 'Liste Fournisseurs', icon: TruckIcon },
+  { name: 'Rtrs Fournisseur', icon: ArrowsRightLeftIcon },
   { name: 'Achat', icon: ClipboardDocumentListIcon }
 ];
 
@@ -95,7 +96,7 @@ export default function Dashboard() {
   }, [navigate, isDarkMode]);
 
   const handleLogout = () => {
-    localStorage.clear();
+    localStorage.clear(); // <-- ici uniquement, vider tout localStorage
     navigate('/');
   };
 
@@ -123,25 +124,25 @@ export default function Dashboard() {
           return <Sorties />;
         case 'Recherche':
           return <Recherche />;
-        // case 'Factures':
-        //   return <Factures />;
-        case 'Factures Clients':
+        case 'Factures EN GROS':
+          return <Factures />;
+           case 'Factures':
           return <FacturesConsolidees />; // <-- 3. CAS AJOUTÉ POUR AFFICHER LE COMPOSANT
         case 'Bénéfices':
           return <Benefices />;
         case 'Achat':
           return <SpecialOrders />;
-           case 'Dettes':
-          return <Liste />;
         case 'Retour mobile':
           return <RetoursMobiles />;
         case 'Liste Fournisseurs':
           return <Fournisseurs />;
         case 'Rtrs Fournisseur':
           return <RemplacementsFournisseur />;
+        case 'Dettes':
+          return <Liste />;
         case 'Rapport':
           return <Rapport />;
-        case 'Rapport Journalier':
+          case 'Rapport Journalier':
           return <RapportJournalier />;
         case 'Accueil':
           return <Accueil />;
@@ -189,7 +190,7 @@ export default function Dashboard() {
                 }`}
             >
               <HomeIcon className="h-6 w-6 mr-3" />
-              Accueil
+              Tableau de bord
             </button>
           </li>
           {sections.map(({ name, icon: Icon }) => (
@@ -219,8 +220,8 @@ export default function Dashboard() {
             >
               <Bars3Icon className="h-6 w-6" />
             </button>
-            {/* <img src={logo} alt="NIANGADOU ELECTRO Logo" className="h-10 w-10 mr-2" /> */}
-            <h1 className="text-xl sm:text-2xl font-semibold text-blue-700 mr-4 dark:text-white transition-colors duration-300">I STORE VAN CHOCO</h1>
+            <img src={logo} alt="NIANGADOU ELECTRO Logo" className="h-10 w-10 mr-2" />
+            <h1 className="text-xl sm:text-2xl font-semibold text-blue-700 mr-4 dark:text-white transition-colors duration-300">ETS DAFF TELECOM</h1>
           </div>
 
           {displayedName && (
