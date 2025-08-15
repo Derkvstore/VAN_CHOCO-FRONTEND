@@ -161,7 +161,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex min-h-screen bg-blue-50 text-blue-900 font-sans dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <div className="flex flex-col sm:flex-row min-h-screen bg-blue-50 text-blue-900 font-sans dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 overflow-hidden">
       {isMenuOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-20 sm:hidden"
@@ -172,7 +172,7 @@ export default function Dashboard() {
       <nav
         className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-30 transform transition-transform duration-300 dark:bg-gray-800 dark:text-gray-100
         ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}
-        sm:static sm:translate-x-0 sm:flex sm:flex-col sm:p-6`}
+        sm:static sm:translate-x-0 sm:flex sm:flex-col sm:h-auto sm:min-h-screen sm:relative`}
       >
         <div className="flex justify-end p-4 sm:hidden">
           <button onClick={() => setIsMenuOpen(false)}>
@@ -211,7 +211,7 @@ export default function Dashboard() {
         </ul>
       </nav>
 
-      <div className="flex-grow flex flex-col">
+      <div className="flex-grow flex flex-col w-full">
         <header className="flex justify-between items-center bg-white shadow-md p-4 sticky top-0 z-10 dark:bg-gray-800 dark:text-gray-100 transition-colors duration-300">
           <div className="flex items-center">
             <button
@@ -221,12 +221,12 @@ export default function Dashboard() {
               <Bars3Icon className="h-6 w-6" />
             </button>
             {/* <img src={logo} alt="NIANGADOU ELECTRO Logo" className="h-10 w-10 mr-2" /> */}
-            <h1 className="text-xl sm:text-2xl font-semibold text-blue-700 mr-4 dark:text-white transition-colors duration-300">I STORE VAN CHOCO</h1>
+            <h1 className="text-xl sm:text-2xl font-semibold text-blue-700 mr-4 dark:text-white transition-colors duration-300 truncate">I STORE VAN CHOCO</h1>
           </div>
 
           {displayedName && (
             <div className="flex items-center space-x-2 sm:space-x-4">
-              <p className="text-sm sm:text-lg text-blue-800 dark:text-gray-200 hidden sm:block">
+              <p className="text-sm sm:text-lg text-blue-800 dark:text-gray-200 hidden sm:block truncate">
                 Bienvenue, <span className="font-bold">{displayedName}</span>!
               </p>
               
@@ -253,11 +253,11 @@ export default function Dashboard() {
           )}
         </header>
 
-        <main className="flex-grow p-4 sm:p-10 overflow-auto">
-          <h2 className="text-xl sm:text-3xl font-bold mb-4 sm:mb-6 text-gray-800 dark:text-gray-200">
+        <main className="flex-grow w-full px-4 py-6 sm:px-10 sm:py-10 overflow-y-auto max-h-screen">
+          <h2 className="text-xl sm:text-3xl font-bold mb-4 sm:mb-6 text-gray-800 dark:text-gray-200 truncate">
             {active}
           </h2>
-          <div className="bg-white rounded-xl shadow p-4 sm:p-6 min-h-[400px] dark:bg-gray-700 dark:text-gray-100">
+          <div className="bg-white rounded-xl shadow p-4 sm:p-6 min-h-[300px] max-w-full overflow-x-auto dark:bg-gray-700 dark:text-gray-100 transition-all">
             {renderSection()}
           </div>
         </main>
