@@ -160,7 +160,7 @@ export default function FacturesConsolidees() {
 
       <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center flex items-center justify-center">
         <UserGroupIcon className="h-6 w-6 text-gray-600 mr-2" />
-        Factures Clients Consolidées
+        Factures en detail des clients 
       </h2>
 
       {statusMessage.text && (
