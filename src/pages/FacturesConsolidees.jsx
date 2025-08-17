@@ -22,15 +22,18 @@ export default function FacturesConsolidees() {
 
   // Fonction utilitaire pour formater les montants en CFA
   const formatCFA = (amount) => {
-    if (amount === null || amount === undefined || isNaN(amount)) {
+    // S'assurer que la valeur est un nombre valide avant de la formater
+    const numericAmount = parseFloat(amount);
+    if (isNaN(numericAmount) || amount === null || amount === undefined) {
       return 'N/A';
     }
-    const numericAmount = parseFloat(amount);
+    // Utilisez un style `currency` pour un formatage plus fiable
     return numericAmount.toLocaleString('fr-FR', {
-      useGrouping: true,
+      style: 'currency',
+      currency: 'XOF', // Code de devise pour le CFA
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
-    }) + ' CFA';
+    }).replace('XOF', 'CFA'); // Remplacer le code par le symbole
   };
 
   // Fonction pour récupérer les données de ventes depuis le backend
@@ -77,14 +80,16 @@ export default function FacturesConsolidees() {
           }
           groupedVentesByClient[clientName].articles.push(item);
           // Calculer le montant total pour tous les articles actifs d'un client
-          groupedVentesByClient[clientName].montant_total_consolide += parseFloat(item.prix_unitaire_vente);
+          // S'assurer de convertir en nombre pour un calcul précis
+          const prixUnitaire = parseFloat(item.prix_unitaire_vente);
+          groupedVentesByClient[clientName].montant_total_consolide += prixUnitaire;
           
           // Ceci est une estimation du montant payé par article.
-          // Une solution plus précise nécessiterait une nouvelle route backend
+          // S'assurer de convertir en nombre et de vérifier la division par zéro
           const totalVente = parseFloat(vente.montant_total);
           const montantPaye = parseFloat(vente.montant_paye);
           if (totalVente > 0) {
-            groupedVentesByClient[clientName].montant_paye_consolide += (montantPaye / totalVente) * parseFloat(item.prix_unitaire_vente);
+            groupedVentesByClient[clientName].montant_paye_consolide += (montantPaye / totalVente) * prixUnitaire;
           }
         }
       });
@@ -93,10 +98,14 @@ export default function FacturesConsolidees() {
 
   const clientsWithActiveSales = Object.values(groupedVentesByClient);
 
-  const filteredClients = clientsWithActiveSales.filter(clientData =>
-    clientData.client_nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (clientData.client_telephone && clientData.client_telephone.includes(searchTerm))
-  );
+  const filteredClients = clientsWithActiveSales.filter(clientData => {
+    const totalDue = clientData.montant_total_consolide - clientData.montant_paye_consolide;
+    const searchLower = searchTerm.toLowerCase();
+    const nameMatches = clientData.client_nom.toLowerCase().includes(searchLower);
+    const phoneMatches = clientData.client_telephone && clientData.client_telephone.includes(searchTerm);
+    // Filtrer pour n'afficher que les clients avec un solde dû > 0 et qui correspondent au terme de recherche
+    return totalDue > 0 && (nameMatches || phoneMatches);
+  });
 
   // Fonction pour gérer l'impression de la facture consolidée
   const handlePrintConsolidatedInvoice = async (client) => {
