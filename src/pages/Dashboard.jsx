@@ -50,7 +50,7 @@ const sections = [
   { name: 'Vente', icon: PlusCircleIcon },
   { name: 'Sorties', icon: ClockIcon },
   { name: 'Factures Clts', icon: DocumentTextIcon },
-  { name: 'Factures ', icon: ListBulletIcon },
+  { name: 'Factures Gros', icon: ListBulletIcon },
   { name: 'Recherche', icon: MagnifyingGlassIcon },
   { name: 'Clients', icon: UserGroupIcon },
   { name: 'Fournisseurs', icon: TruckIcon },
@@ -127,7 +127,7 @@ export default function Dashboard() {
           return <Recherche />;
         case 'Factures Clts':
           return <FacturesConsolidees />;
-            case 'Factures':
+            case 'Factures Gros':
           return <Factures />;
         case 'Bénéfices':
           return <Benefices />;
