@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import {
   PlusIcon,
@@ -368,7 +368,6 @@ export default function SpecialOrders() {
             className="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200"
             placeholder="Ex: Le client a changé d'avis..."
             required
-            autoFocus
           ></textarea>
           {confirmModalError && (
             <p className="text-red-500 text-xs mt-1">{confirmModalError}</p>
@@ -399,7 +398,6 @@ export default function SpecialOrders() {
             className="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
             placeholder="Ex: Produit défectueux..."
             required
-            autoFocus
           ></textarea>
           {confirmModalError && (
             <p className="text-red-500 text-xs mt-1">{confirmModalError}</p>
@@ -409,7 +407,9 @@ export default function SpecialOrders() {
       (reason) => updateOrderStatus(order.order_id, 'remplacé', reason)
     );
   };
-
+  
+  // Suppression du useEffect qui posait problème
+  /*
   useEffect(() => {
     if (showConfirmModal && textareaRef.current) {
       const timer = setTimeout(() => {
@@ -418,6 +418,7 @@ export default function SpecialOrders() {
       return () => clearTimeout(timer);
     }
   }, [showConfirmModal, returnReasonInput]);
+  */
 
   const filteredOrders = orders.filter(order => {
     const searchLower = searchTerm.toLowerCase();
@@ -500,14 +501,14 @@ export default function SpecialOrders() {
             <thead className="bg-gray-100 text-gray-700 uppercase tracking-wider">
               <tr>
                 <th className="px-4 py-3 text-left">Client</th>
-                <th className="px-4 py-3 text-left">Fournisseur</th>
+                <th className="px-4 py-3 text-left hidden sm:table-cell">Fournisseur</th>
                 <th className="px-4 py-3 text-left">Article</th>
                 <th className="px-4 py-3 text-left">IMEI</th>
-                <th className="px-4 py-3 text-right">Prix Achat</th>
+                <th className="px-4 py-3 text-right hidden sm:table-cell">Prix Achat</th>
                 <th className="px-4 py-3 text-right">Prix Vente</th>
                 <th className="px-4 py-3 text-right">Montant Payé</th>
-                <th className="px-4 py-3 text-right">Reste à Payer</th>
-                <th className="px-4 py-3 text-left">Date Commande</th>
+                <th className="px-4 py-3 text-right hidden sm:table-cell">Reste à Payer</th>
+                <th className="px-4 py-3 text-left hidden md:table-cell">Date</th>
                 <th className="px-4 py-3 text-center">Statut</th>
                 <th className="px-4 py-3 text-center">Actions</th>
               </tr>
@@ -519,11 +520,11 @@ export default function SpecialOrders() {
                     <div className="font-medium text-gray-900 flex items-center">
                       <UserIcon className="h-4 w-4 mr-1 text-gray-500" /> {order.client_nom}
                     </div>
-                    <div className="text-gray-500 text-xs flex items-center">
+                    <div className="text-gray-500 text-xs flex items-center hidden md:block">
                       <PhoneIcon className="h-3 w-3 mr-1" /> {order.client_telephone || 'N/A'}
                     </div>
                   </td>
-                  <td className="px-4 py-4 whitespace-nowrap">
+                  <td className="px-4 py-4 whitespace-nowrap hidden sm:table-cell">
                     <div className="flex items-center">
                       <BuildingStorefrontIcon className="h-4 w-4 mr-1 text-gray-500" /> {order.fournisseur_nom}
                     </div>
@@ -532,16 +533,16 @@ export default function SpecialOrders() {
                     <div className="font-medium text-gray-900 flex items-center">
                       <TagIcon className="h-4 w-4 mr-1 text-gray-500" /> {order.marque} {order.modele}
                     </div>
-                    <div className="text-gray-500 text-xs flex items-center">
+                    <div className="text-gray-500 text-xs flex items-center hidden md:block">
                       <CubeIcon className="h-3 w-3 mr-1" /> {order.stockage || 'N/A'} ({order.type}{order.type_carton ? ` ${order.type_carton}` : ''})
                     </div>
                   </td>
                   <td className="px-4 py-4 whitespace-nowrap">{order.imei || 'N/A'}</td>
-                  <td className="px-4 py-4 text-right whitespace-nowrap">{formatCFA(order.prix_achat_fournisseur)}</td>
+                  <td className="px-4 py-4 text-right whitespace-nowrap hidden sm:table-cell">{formatCFA(order.prix_achat_fournisseur)}</td>
                   <td className="px-4 py-4 text-right whitespace-nowrap font-semibold text-blue-700">{formatCFA(order.prix_vente_client)}</td>
                   <td className="px-4 py-4 text-right whitespace-nowrap">{formatCFA(order.montant_paye)}</td>
-                  <td className="px-4 py-4 text-right whitespace-nowrap font-semibold text-red-600">{formatCFA(order.montant_restant)}</td>
-                  <td className="px-4 py-4 whitespace-nowrap">
+                  <td className="px-4 py-4 text-right whitespace-nowrap font-semibold text-red-600 hidden sm:table-cell">{formatCFA(order.montant_restant)}</td>
+                  <td className="px-4 py-4 whitespace-nowrap hidden md:table-cell">
                     <div className="flex items-center">
                       <ClockIcon className="h-4 w-4 mr-1 text-gray-500" /> {formatDate(order.date_commande)}
                     </div>
@@ -563,11 +564,7 @@ export default function SpecialOrders() {
                           title="Modifier Paiement"
                           disabled={isLoadingPayment}
                         >
-                           {/* ---------------------------------------------------- */}
-                          {/* ➡️ MODIFICATIONS: Bouton de paiement avec loading */}
-                          {/* ---------------------------------------------------- */}
-                          {isLoadingPayment ? <ArrowPathIcon className="h-5 w-5 animate-spin" /> : <CurrencyDollarIcon className="h-5 w-5" />}
-                          {/* ---------------------------------------------------- */}
+                          <CurrencyDollarIcon className="h-5 w-5" />
                         </button>
                       )}
                       {(order.statut !== 'annulé' && order.statut !== 'remplacé') && (
@@ -936,16 +933,12 @@ export default function SpecialOrders() {
       {showConfirmModal && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center p-4 z-50 no-print">
           <div className="bg-white p-4 sm:p-6 rounded-lg shadow-xl max-w-xs sm:max-w-sm w-full relative z-[60] pointer-events-auto">
-             {/* ---------------------------------------------------- */}
-            {/* ➡️ MODIFICATIONS: Titres et messages traduits */}
-            {/* ---------------------------------------------------- */}
             <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3">{confirmModalContent.title}</h3>
             {typeof confirmModalContent.message === 'string' ? (
               <p className="text-sm text-gray-700 mb-4">{confirmModalContent.message}</p>
             ) : (
               <div className="text-sm text-gray-700 mb-4">{confirmModalContent.message}</div>
             )}
-            {/* ---------------------------------------------------- */}
             {confirmModalError && (
               <p className="text-red-500 text-xs mt-1">{confirmModalError}</p>
             )}

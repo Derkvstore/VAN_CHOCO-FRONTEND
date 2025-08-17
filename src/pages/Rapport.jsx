@@ -6,29 +6,27 @@ import {
   XMarkIcon,
   CheckCircleIcon,
   XCircleIcon,
-  PlusIcon, // Pour les ajouts
-  MinusIcon, // Pour les ventes/sorties
-  ArrowUturnLeftIcon, // Pour les retours
-  CubeIcon, // Pour le stock total
-  ClockIcon, // Importation de ClockIcon
-  ArrowDownTrayIcon, // Importation de ArrowDownTrayIcon
-  ArrowPathIcon, // Importation de ArrowPathIcon
-  DocumentTextIcon, // Icône pour les factures
-  CurrencyDollarIcon // Icône pour les montants
+  PlusIcon,
+  MinusIcon,
+  ArrowUturnLeftIcon,
+  CubeIcon,
+  ClockIcon,
+  ArrowDownTrayIcon,
+  ArrowPathIcon,
+  DocumentTextIcon,
+  CurrencyDollarIcon
 } from '@heroicons/react/24/outline';
-import axios from 'axios'; // Importez axios si ce n'est pas déjà fait
+import axios from 'axios';
 
 export default function Rapport() {
   const [stockSummary, setStockSummary] = useState([]);
-  const [dailyStats, setDailyStats] = useState(null); // Nouvel état pour les stats journalières
+  const [dailyStats, setDailyStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [statusMessage, setStatusMessage] = useState({ type: '', text: '' });
   const [searchTerm, setSearchTerm] = useState('');
-
-  // ✅ LOGIQUE CORRIGÉE POUR GÉRER LOCAL ET PRODUCTION
+   
   const backendUrl = import.meta.env.PROD
     ?    'https://vanchoco-backend-production.up.railway.app'
-
     : 'http://localhost:3001';
 
   const getFormattedDate = () => {
@@ -43,7 +41,6 @@ export default function Rapport() {
     if (amount === null || amount === undefined || isNaN(parseFloat(amount))) {
       return 'N/A';
     }
-    // Formate le montant sans décimales et sans séparateur de milliers, puis ajoute ' CFA'
     return Math.round(parseFloat(amount)).toLocaleString('fr-FR') + ' CFA';
   };
 
@@ -51,7 +48,7 @@ export default function Rapport() {
     setLoading(true);
     setStatusMessage({ type: '', text: '' });
     try {
-      const response = await axios.get(`${backendUrl}/api/reports/stock-summary`); // URL mise à jour
+      const response = await axios.get(`${backendUrl}/api/reports/stock-summary`);
       setStockSummary(response.data);
     } catch (error) {
       console.error('Erreur lors du chargement du résumé du stock:', error);
@@ -63,8 +60,7 @@ export default function Rapport() {
 
   const fetchDailyStats = async () => {
     try {
-      // CORRECTION DE L'URL ICI
-      const response = await axios.get(`${backendUrl}/api/reports/dashboard-stats`); // URL mise à jour
+      const response = await axios.get(`${backendUrl}/api/reports/dashboard-stats`);
       if (response.status !== 200) {
         throw new Error(response.data.error || 'Échec de la récupération des statistiques journalières.');
       }
@@ -78,7 +74,7 @@ export default function Rapport() {
 
   useEffect(() => {
     fetchStockSummary();
-    fetchDailyStats(); // Appelle aussi les stats journalières
+    fetchDailyStats();
   }, []);
 
   const filteredStock = stockSummary.filter(item => {
@@ -97,7 +93,7 @@ export default function Rapport() {
   };
 
   return (
-    <div id="printableContent" className="p-4 max-w-full mx-auto font-sans bg-gray-50 rounded-xl shadow border border-gray-200">
+    <div id="printableContent" className="p-4 sm:p-8 max-w-full mx-auto font-sans bg-gray-50 rounded-xl shadow border border-gray-200">
       <style>
         {`
         @media print {
@@ -153,7 +149,7 @@ export default function Rapport() {
           .daily-stats-section {
             page-break-before: always;
           }
-          .stock-yesterday-placeholder { /* Renommé pour plus de clarté */
+          .stock-yesterday-placeholder {
             border-bottom: 1px dotted #999;
             display: inline-block;
             min-width: 50px;
@@ -163,15 +159,15 @@ export default function Rapport() {
         `}
       </style>
 
-      <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center flex items-center justify-center print-header">
+      <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4 text-center flex items-center justify-center print-header">
         <ChartBarIcon className="h-6 w-6 text-gray-600 mr-2 print-hidden" />
         STOCK DU {getFormattedDate()}
       </h2>
 
       {statusMessage.text && (
-        <div className={`mb-4 p-3 rounded-md flex items-center justify-between text-sm no-print
+        <div className={`mb-4 p-3 rounded-md flex items-center justify-between text-sm sm:text-base no-print
           ${statusMessage.type === 'success' ? 'bg-green-100 text-green-700 border border-green-400' : 'bg-red-100 text-red-700 border border-red-400'}`}>
-          <span>
+          <span className="flex-1 flex items-center">
             {statusMessage.type === 'success' ? <CheckCircleIcon className="h-5 w-5 inline mr-2" /> : <XCircleIcon className="h-5 w-5 inline mr-2" />}
             {statusMessage.text}
           </span>
@@ -181,25 +177,23 @@ export default function Rapport() {
         </div>
       )}
 
-      <div className="mb-6 flex justify-center no-print">
-        <div className="relative w-full max-w-sm">
+      <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row justify-between items-center no-print space-y-4 sm:space-y-0 sm:space-x-4">
+        <div className="relative w-full sm:w-80">
           <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <MagnifyingGlassIcon className="w-4 h-4 text-gray-400" />
           </span>
           <input
             type="text"
-            placeholder="Rechercher par marque, modèle, stockage..."
+            placeholder="Rechercher par marque, modèle, etc."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full bg-white text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
           />
         </div>
-      </div>
 
-      <div className="flex justify-end mb-4 no-print">
         <button
           onClick={handlePrint}
-          className="flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition duration-200 font-medium"
+          className="w-full sm:w-auto flex items-center justify-center px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition duration-200 font-medium text-sm"
         >
           <PrinterIcon className="h-5 w-5 mr-2" />
           Imprimer le rapport
@@ -211,45 +205,43 @@ export default function Rapport() {
       ) : filteredStock.length === 0 ? (
         <p className="text-gray-500 text-center text-sm">Aucun produit trouvé correspondant à votre recherche.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <div className="min-w-[800px]">
-            <table className="table-auto w-full text-xs divide-y divide-gray-200">
-              <thead className="bg-gray-100 text-gray-700 text-left">
-                <tr>
-                  <th className="px-3 py-2 font-medium">Marque</th>
-                  <th className="px-3 py-2 font-medium">Modèle</th>
-                  <th className="px-3 py-2 font-medium">Stockage</th>
-                  <th className="px-3 py-2 font-medium">Type</th>
-                  <th className="px-3 py-2 font-medium">Type Carton / Type Arrivage</th>
-                  <th className="px-3 py-2 font-medium text-right">Qté Totale en Stock</th>
+        <div className="overflow-x-auto rounded-lg shadow-md border border-gray-200">
+          <table className="table-auto w-full text-xs sm:text-sm divide-y divide-gray-200">
+            <thead className="bg-gray-100 text-gray-700 text-left sticky top-0 z-10">
+              <tr>
+                <th className="px-3 py-2 font-medium">Marque</th>
+                <th className="px-3 py-2 font-medium">Modèle</th>
+                <th className="px-3 py-2 font-medium hidden sm:table-cell">Stockage</th>
+                <th className="px-3 py-2 font-medium hidden md:table-cell">Type</th>
+                <th className="px-3 py-2 font-medium hidden lg:table-cell">Type Carton</th>
+                <th className="px-3 py-2 font-medium text-right">Qté Totale</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {filteredStock.map((item, index) => (
+                <tr key={`${item.marque}-${item.modele}-${item.stockage}-${item.type}-${item.type_carton || ''}`} className="hover:bg-gray-50">
+                  <td className="px-3 py-2 text-gray-900">{item.marque}</td>
+                  <td className="px-3 py-2 text-gray-700">{item.modele}</td>
+                  <td className="px-3 py-2 text-gray-700 hidden sm:table-cell">{item.stockage || '—'}</td>
+                  <td className="px-3 py-2 text-gray-700 hidden md:table-cell">{item.type || '—'}</td>
+                  <td className="px-3 py-2 text-gray-700 hidden lg:table-cell">{item.type_carton || '—'}</td>
+                  <td className="px-3 py-2 text-right font-medium text-gray-900">{item.total_quantite_en_stock}</td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {filteredStock.map((item, index) => (
-                  <tr key={`${item.marque}-${item.modele}-${item.stockage}-${item.type}-${item.type_carton || ''}`} className="hover:bg-gray-50">
-                    <td className="px-3 py-2 text-gray-900">{item.marque}</td>
-                    <td className="px-3 py-2 text-gray-700">{item.modele}</td>
-                    <td className="px-3 py-2 text-gray-700">{item.stockage || '—'}</td>
-                    <td className="px-3 py-2 text-gray-700">{item.type || '—'}</td>
-                    <td className="px-3 py-2 text-gray-700">{item.type_carton || '—'}</td>
-                    <td className="px-3 py-2 text-right font-medium text-gray-900">{item.total_quantite_en_stock}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
 
       {/* Nouvelle section pour les statistiques journalières */}
       {!loading && dailyStats && (
-        <div className="daily-stats-section mt-10 p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-          <h3 className="text-xl font-semibold text-gray-800 mb-6 text-center">Mouvements de Stock Journaliers ({getFormattedDate()})</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="daily-stats-section mt-8 sm:mt-10 p-4 sm:p-6 bg-white rounded-xl shadow-lg border border-gray-200">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 sm:mb-6 text-center">Mouvements Journaliers ({getFormattedDate()})</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {/* Carte pour les Mobiles en Carton */}
-            <div className="bg-blue-50 rounded-lg p-5 shadow-sm border border-blue-200">
-              <h4 className="text-lg font-bold text-blue-800 mb-3 flex items-center">
-                <CubeIcon className="h-6 w-6 mr-2 text-blue-600" />
+            <div className="bg-blue-50 rounded-lg p-4 sm:p-5 shadow-sm border border-blue-200">
+              <h4 className="text-md sm:text-lg font-bold text-blue-800 mb-3 flex items-center">
+                <CubeIcon className="h-5 w-5 sm:h-6 sm:w-6 mr-2 text-blue-600" />
                 Mobiles en Carton
               </h4>
               <ul className="space-y-2 text-gray-700 text-sm">
@@ -273,22 +265,21 @@ export default function Rapport() {
                   <ArrowDownTrayIcon className="h-4 w-4 mr-2 text-cyan-600" />
                   Rendu aujourd'hui: <span className="font-semibold ml-1">{dailyStats.renduTodayCarton}</span>
                 </li>
-                {/* Nouvelle ligne pour les factures Carton */}
-                <li className="flex items-center font-bold text-gray-900 border-t pt-2 mt-2">
+                {/* <li className="flex items-center font-bold text-gray-900 border-t pt-2 mt-2">
                   <DocumentTextIcon className="h-5 w-5 mr-2 text-purple-600" />
-                  Facturé aujourd'hui: <span className="text-xl ml-1">{dailyStats.invoiceSalesCartonTodayCount ?? 0}</span> 
-                </li>
+                  Facturé aujourd'hui: <span className="text-lg sm:text-xl ml-1">{dailyStats.invoiceSalesCartonTodayCount ?? 0}</span> 
+                </li> */}
                 <li className="flex items-center font-bold text-gray-900 border-t pt-2 mt-2">
                   <CubeIcon className="h-5 w-5 mr-2 text-blue-700" />
-                  Stock Actuel: <span className="text-xl ml-1">{dailyStats.totalCartons}</span>
+                  Stock Actuel: <span className="text-lg sm:text-xl ml-1">{dailyStats.totalCartons}</span>
                 </li>
               </ul>
             </div>
 
             {/* Carte pour les Mobiles en Arrivage */}
-            <div className="bg-green-50 rounded-lg p-5 shadow-sm border border-green-200">
-              <h4 className="text-lg font-bold text-green-800 mb-3 flex items-center">
-                <CubeIcon className="h-6 w-6 mr-2 text-green-600" />
+            <div className="bg-green-50 rounded-lg p-4 sm:p-5 shadow-sm border border-green-200">
+              <h4 className="text-md sm:text-lg font-bold text-green-800 mb-3 flex items-center">
+                <CubeIcon className="h-5 w-5 sm:h-6 sm:w-6 mr-2 text-green-600" />
                 Mobiles en Arrivage
               </h4>
               <ul className="space-y-2 text-gray-700 text-sm">
@@ -312,14 +303,13 @@ export default function Rapport() {
                   <ArrowDownTrayIcon className="h-4 w-4 mr-2 text-cyan-600" />
                   Rendu aujourd'hui: <span className="font-semibold ml-1">{dailyStats.renduTodayArrivage}</span>
                 </li>
-                {/* Nouvelle ligne pour les factures Arrivage */}
-                <li className="flex items-center font-bold text-gray-900 border-t pt-2 mt-2">
+                {/* <li className="flex items-center font-bold text-gray-900 border-t pt-2 mt-2">
                   <DocumentTextIcon className="h-5 w-5 mr-2 text-purple-600" />
-                  Facturé aujourd'hui: <span className="text-xl ml-1">{dailyStats.invoiceSalesArrivageTodayCount ?? 0}</span> 
-                </li>
+                  Facturé aujourd'hui: <span className="text-lg sm:text-xl ml-1">{dailyStats.invoiceSalesArrivageTodayCount ?? 0}</span> 
+                </li> */}
                 <li className="flex items-center font-bold text-gray-900 border-t pt-2 mt-2">
                   <CubeIcon className="h-5 w-5 mr-2 text-green-700" />
-                  Stock Actuel: <span className="text-xl ml-1">{dailyStats.totalArrivage}</span>
+                  Stock Actuel: <span className="text-lg sm:text-xl ml-1">{dailyStats.totalArrivage}</span>
                 </li>
               </ul>
             </div>
@@ -327,4 +317,5 @@ export default function Rapport() {
         </div>
       )}
     </div>
-  )}
+  );
+}

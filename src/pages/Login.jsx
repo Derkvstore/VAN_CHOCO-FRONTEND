@@ -46,6 +46,9 @@ export default function Login() {
       localStorage.setItem('token', data.token);
       localStorage.setItem('fullName', data.fullName);
       localStorage.setItem('username', data.username);
+      // ➡️ Ajout du stockage du rôle de l'utilisateur
+      localStorage.setItem('userRole', data.role);
+      
       navigate('/dashboard');
     } catch (err) {
       console.error('Erreur lors de la connexion frontend :', err);
