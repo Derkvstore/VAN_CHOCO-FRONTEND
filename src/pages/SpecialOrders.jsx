@@ -45,6 +45,22 @@ const STATUS_DISPLAY_MAP = {
   'remplacé': 'REMPLACÉ',
 };
 
+// Liste des raisons prédéfinies
+const RAISONS_ANNULATION = [
+  "Le client a changé d'avis",
+  "Problème de disponibilité chez le fournisseur",
+  "Article non conforme ou défectueux",
+  "Erreur de commande",
+  "Autre"
+];
+
+const RAISONS_REMPLACEMENT = [
+  "Article défectueux",
+  "Article ne correspondant pas à la description",
+  "Erreur de commande du fournisseur",
+  "Autre"
+];
+
 export default function SpecialOrders() {
   const [orders, setOrders] = useState([]);
   const [clients, setClients] = useState([]);
@@ -63,7 +79,7 @@ export default function SpecialOrders() {
   const [paymentModalError, setPaymentModalError] = useState('');
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [confirmModalContent, setConfirmModalContent] = useState({ title: "", message: null });
+  const [confirmModalContent, setConfirmModalContent] = useState({ title: "", message: null, currentOrder: null });
   const [onConfirmAction, setOnConfirmAction] = useState(null);
   const [returnReasonInput, setReturnReasonInput] = useState('');
   const [confirmModalError, setConfirmModalError] = useState('');
@@ -196,6 +212,7 @@ export default function SpecialOrders() {
 
   const openAddModal = () => {
     resetForm();
+    setCurrentOrder(null);
     setIsModalOpen(true);
   };
 
@@ -261,6 +278,7 @@ export default function SpecialOrders() {
   const updateOrderStatus = async (orderId, newStatus, reason = null) => {
     setStatusMessage({ type: '', text: '' });
     setConfirmModalError('');
+    setIsConfirming(true);
     setStatusUpdateLoading(prev => ({ ...prev, [orderId]: true }));
     try {
       await axios.put(`${backendUrl}/api/special-orders/${orderId}/update-status`, {
@@ -325,8 +343,8 @@ export default function SpecialOrders() {
     }
   };
 
-  const openConfirmModal = (title, message, action) => {
-    setConfirmModalContent({ title, message });
+  const openConfirmModal = (title, message, action, order) => {
+    setConfirmModalContent({ title, message, currentOrder: order });
     setOnConfirmAction(() => (currentReason) => action(currentReason));
     setConfirmModalError('');
     setReturnReasonInput('');
@@ -336,7 +354,7 @@ export default function SpecialOrders() {
 
   const closeConfirmModal = () => {
     setShowConfirmModal(false);
-    setConfirmModalContent({ title: "", message: null });
+    setConfirmModalContent({ title: "", message: null, currentOrder: null });
     setOnConfirmAction(null);
     setReturnReasonInput('');
     setConfirmModalError('');
@@ -356,25 +374,26 @@ export default function SpecialOrders() {
               </span>
             )}
           </p>
-          <label htmlFor="reasonInput" className="block text-xs font-medium text-gray-700 mb-1 md:text-sm">
+          <label htmlFor="reasonSelect" className="block text-xs font-medium text-gray-700 mb-1 md:text-sm">
             Raison de l'annulation:
           </label>
-          <textarea
-            ref={textareaRef}
-            id="reasonInput"
+          <select
+            id="reasonSelect"
             value={returnReasonInput}
             onChange={(e) => setReturnReasonInput(e.target.value)}
-            rows={2}
             className="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200"
-            placeholder="Ex: Le client a changé d'avis..."
             required
-          ></textarea>
+          >
+            <option value="">Sélectionner une raison</option>
+            {RAISONS_ANNULATION.map(reason => <option key={reason} value={reason}>{reason}</option>)}
+          </select>
           {confirmModalError && (
             <p className="text-red-500 text-xs mt-1">{confirmModalError}</p>
           )}
         </>
       ),
-      (reason) => updateOrderStatus(order.order_id, 'annulé', reason)
+      (reason) => updateOrderStatus(order.order_id, 'annulé', reason),
+      order
     );
   };
 
@@ -386,40 +405,29 @@ export default function SpecialOrders() {
           <p className="text-gray-700 mb-2 text-sm md:text-base">
             Êtes-vous sûr de vouloir marquer la commande spéciale pour "{order.marque} {order.modele}" comme "Remplacée" ?
           </p>
-          <label htmlFor="reasonInput" className="block text-xs font-medium text-gray-700 mb-1 md:text-sm">
+          <label htmlFor="reasonSelect" className="block text-xs font-medium text-gray-700 mb-1 md:text-sm">
             Raison du remplacement:
           </label>
-          <textarea
-            ref={textareaRef}
-            id="reasonInput"
+          <select
+            id="reasonSelect"
             value={returnReasonInput}
             onChange={(e) => setReturnReasonInput(e.target.value)}
-            rows={2}
             className="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
-            placeholder="Ex: Produit défectueux..."
             required
-          ></textarea>
+          >
+            <option value="">Sélectionner une raison</option>
+            {RAISONS_REMPLACEMENT.map(reason => <option key={reason} value={reason}>{reason}</option>)}
+          </select>
           {confirmModalError && (
             <p className="text-red-500 text-xs mt-1">{confirmModalError}</p>
           )}
         </>
       ),
-      (reason) => updateOrderStatus(order.order_id, 'remplacé', reason)
+      (reason) => updateOrderStatus(order.order_id, 'remplacé', reason),
+      order
     );
   };
   
-  // Suppression du useEffect qui posait problème
-  /*
-  useEffect(() => {
-    if (showConfirmModal && textareaRef.current) {
-      const timer = setTimeout(() => {
-        textareaRef.current.focus();
-      }, 50);
-      return () => clearTimeout(timer);
-    }
-  }, [showConfirmModal, returnReasonInput]);
-  */
-
   const filteredOrders = orders.filter(order => {
     const searchLower = searchTerm.toLowerCase();
     return (
@@ -930,10 +938,18 @@ export default function SpecialOrders() {
         </div>
       )}
 
-      {showConfirmModal && (
+      {showConfirmModal && confirmModalContent.currentOrder && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center p-4 z-50 no-print">
           <div className="bg-white p-4 sm:p-6 rounded-lg shadow-xl max-w-xs sm:max-w-sm w-full relative z-[60] pointer-events-auto">
             <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3">{confirmModalContent.title}</h3>
+            {/* Affichage des informations ajoutées */}
+            <p className="text-sm text-gray-600">
+              <span className="font-semibold">Fournisseur :</span> {confirmModalContent.currentOrder.fournisseur_nom}
+            </p>
+            <p className="text-sm text-gray-600 mb-4">
+              <span className="font-semibold">Date de l'opération :</span> {new Date().toLocaleDateString('fr-FR')}
+            </p>
+            
             {typeof confirmModalContent.message === 'string' ? (
               <p className="text-sm text-gray-700 mb-4">{confirmModalContent.message}</p>
             ) : (
@@ -953,11 +969,11 @@ export default function SpecialOrders() {
               <button
                 onClick={() => onConfirmAction(returnReasonInput)}
                 className={`px-4 py-2 text-sm rounded-md transition ${
-                  isConfirming || (confirmModalContent.message && typeof confirmModalContent.message !== 'string' && !returnReasonInput.trim())
+                  isConfirming || !returnReasonInput.trim()
                     ? 'bg-red-400 cursor-not-allowed'
                     : 'bg-red-600 text-white hover:bg-red-700'
                 }`}
-                disabled={isConfirming || (confirmModalContent.message && typeof confirmModalContent.message !== 'string' && !returnReasonInput.trim())}
+                disabled={isConfirming || !returnReasonInput.trim()}
               >
                 {isConfirming ? (
                   <ArrowPathIcon className="h-5 w-5 animate-spin mx-auto" />
